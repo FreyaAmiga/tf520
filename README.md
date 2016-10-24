@@ -1,6 +1,8 @@
 Terrible Fire 68020 "Accelerator"
 =================================
 
+** WARNING THIS IS ALPHA AT THE MOMENT
+
 This repository contains all the files needed to produce a copy of my accelerator board.
 
 The CPLD Required is a XC9532XL-VQ44
@@ -10,7 +12,7 @@ Everything in this repository is released under the GNU GPLv2. You may create or
 Requirements
 ------------
 
-  * Xilinx ISE, ideally 14.7 (the final version)
+  * Xilinx ISE, 14.7 (the final version)
   * JTAG Interface
 
 PCB Manufacture
