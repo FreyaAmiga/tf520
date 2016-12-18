@@ -1,7 +1,7 @@
 Terrible Fire 68020 "Accelerator"
 =================================
 
-** WARNING THIS IS ALPHA AT THE MOMENT
+** WARNING THIS IS BETA AT THE MOMENT
 
 This repository contains all the files needed to produce a copy of my accelerator board.
 
@@ -19,3 +19,7 @@ PCB Manufacture
 ---------------
 
 You may get any PCB manufacturer to produce the board for you. The board is 2-layer. I recommend DirtyPCBs 
+
+This link takes you to a store to buy them 
+
+http://dirtypcbs.com/store/designer/details/12476/1120/sl520-rev3-zip
