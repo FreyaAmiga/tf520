@@ -20,9 +20,12 @@
 #
 
 #Clocks
-NET "CLKCPU"    LOC = "P44" ;
 NET "CLK7M"    LOC = "P43" ;
-
+NET "CLK7M" BUFG=CLK;
+NET "CLK7M" TNM_NET = "CLK7M"; # gives the net clk a group name as CLK7M
+TIMESPEC "TS_CLK7M" = PERIOD "CLK7M" 139 ns ; # add 139 ns PERIOD constraint the
+OFFSET = IN 15 ns BEFORE "CLK7M" ; # add  offset in constraint
+OFFSET = OUT 15 ns AFTER "CLK7M" ; # add  offset out constraint
 # 68K Signals
 NET "VPA"    LOC = "P42";
 NET "AS"     LOC = "P41";
@@ -43,9 +46,9 @@ NET "A<17>"	  LOC = "P07";
 NET "A<18>"	  LOC = "P05";
 NET "A<19>"	  LOC = "P06";
 
-NET "HIGH"	  LOC = "P08" ; // drive this high
-
 # 68020 Signals
+
+#NET "HIGH"	  LOC = "P08" ; // do not drive low.
 
 #NET "NC<1>"	  LOC = "P13" ;
 #NET "NC<10>"	  LOC = "P14" ;
@@ -54,8 +57,7 @@ NET "HIGH"	  LOC = "P08" ; // drive this high
 #NET "NC<13>"	  LOC = "P19" ;
 
 NET "BG20"	  LOC = "P03" ;
-NET "DS20_1"	  LOC = "P21" ;
-NET "DS20_2"	  LOC = "P20" ;
+NET "DS20"	  LOC = "P21" ;
 NET "AS20"	  LOC = "P22" ;
 NET "DSACK1"  LOC = "P23" ;
 

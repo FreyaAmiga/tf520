@@ -1,0 +1,79 @@
+# 
+# This file is part of the Terrible Fire Amiga Accelerator.
+# 
+# Copyright (c) 2016, Stephen J. Leary <stephen@terriblefire.com>
+# 
+# All rights reserved.
+#
+# This source file is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published
+# by the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This source file is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+#Clocks
+NET "CLKCPU"    LOC = "P44" ;
+NET "CLKCPU" BUFG=CLK;
+NET "CLKCPU" TNM_NET = "CLKCPU"; # gives the net clk a group name as CLKCPU
+TIMESPEC "TS_CLKCPU" = PERIOD "CLKCPU" 20 ns ; # add 20 ns PERIOD constraint the
+OFFSET = IN 5 ns BEFORE "CLKCPU" ; # add  offset in constraint
+OFFSET = OUT 5 ns AFTER "CLKCPU" ; # add  offset out constraint
+
+NET "CLK7M"    LOC = "P43" ;
+NET "CLK7M" BUFG=CLK;
+NET "CLK7M" TNM_NET = "CLK7M"; # gives the net clk a group name as CLK7M
+TIMESPEC "TS_CLK7M" = PERIOD "CLK7M" 139 ns ; # add 139 ns PERIOD constraint the
+OFFSET = IN 15 ns BEFORE "CLK7M" ; # add  offset in constraint
+OFFSET = OUT 15 ns AFTER "CLK7M" ; # add  offset out constraint
+
+# 68K Signals
+NET "VPA"    LOC = "P42";
+NET "AS"     LOC = "P41";
+NET "UDS"    LOC = "P40";
+NET "LDS"    LOC = "P39";
+NET "RW00"   LOC = "P38";
+NET "RW20"   LOC = "P20";
+NET "DTACK"  LOC = "P37";
+NET "BG"     LOC = "P36";
+NET "BGACK"  LOC = "P34";
+NET "VMA"    LOC = "P01" ;
+NET "E"      LOC = "P02" ;
+NET "BERR"   LOC = "P23";
+
+NET "A0"    LOC = "P33";
+NET "A<16>"	  LOC = "P12";
+NET "A<17>"	  LOC = "P07";
+NET "A<18>"	  LOC = "P05";
+NET "A<19>"	  LOC = "P06";
+
+# 68020 Signals
+
+#NET "HALT"	  LOC = "P21";
+#NET "RESET"  LOC = "P14" ;
+#NET "HIGH"	  LOC = "P08" ; // do not drive low.
+
+#NET "NC<10>"	  LOC = "P14" ;
+#NET "NC<11>"	  LOC = "P16" ;
+#NET "NC<12>"	  LOC = "P18" ;
+#NET "NC<13>"	  LOC = "P19" ;
+
+NET "BG20"	  LOC = "P03" ;
+NET "DS20"	  LOC = "P18" ;
+NET "AS20"	  LOC = "P19" ;
+NET "DSACK1"  LOC = "P22" ;
+
+NET "AVEC"	  LOC = "P28" ;
+NET "SIZ<1>"  LOC = "P29" ;
+NET "SIZ<0>"  LOC = "P30" ;
+
+NET "FC<0>"   LOC = "P32"  ;
+NET "FC<1>"	  LOC = "P27" ;
+NET "FC<2>"	  LOC = "P31" ;

@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 /* 
  
- This file is part of the Terrible Fire Amiga Accelerator.
+ This file is part of the Terrible Fire Amiga 520 Accelerator.
  
  Copyright (c) 2016, Stephen J. Leary <stephen@terriblefire.com>
  
@@ -23,14 +23,12 @@
 */
 
 module tf520(
-
-           input 	 CLKCPU,
+		   input 	 CLKCPU,
            input 	 CLK7M,
 
            input 	 BG20,
            input 	 AS20,
-           input 	 DS20_1,
-           input 	 DS20_2,
+           input 	 DS20,
            input 	 RW20,
            output 	 RW00,
 
@@ -54,12 +52,9 @@ module tf520(
            output    BERR,
         
            output 	 DSACK1,
-           output 	 AVEC, 
-           
-           input HIGH
-
+           output 	 AVEC
        );
-       
+
 wire DS20DLY;
 wire AS20DLY;
 
@@ -81,16 +76,14 @@ end
 
 reg  DTQUAL = 1'b0;
 
-wire DS20 = DS20_1 & DS20_2;
-
 wire DTRIG;
 wire DTRIG_SYNC;
 
 wire CPUSPACE = &FC;
 
-wire CPCS = CPUSPACE & ({A[19:16]} == {4'b0010});
-wire BKPT = CPUSPACE & ({A[19:16]} == {4'b0000});
-wire IACK = CPUSPACE & ({A[19:16]} == {4'b1111});
+wire CPCS = CPUSPACE & ({A[19:16]} === {4'b0010});
+wire BKPT = CPUSPACE & ({A[19:16]} === {4'b0000});
+wire IACK = CPUSPACE & ({A[19:16]} === {4'b1111});
 wire DTACKPRELIM = CLK7M | CLK7MB2;
 
 FDCP #(.INIT(1'b1)) 
@@ -122,21 +115,21 @@ FDCP #(.INIT(1'b1))
 
 always @(posedge CLKCPU) begin 
 
-	SYSDSACK1 <= DSACK1INT | CPUSPACE;
+	SYSDSACK1 <= DSACK1INT | CPCS;
 
 end
 
 always @(posedge CLK7M) begin
 
 	 DTQUAL 	<= AS20DLY;
-	 RW20DLY <= RW20 & HIGH;
+	 RW20DLY <= RW20;
      
     BGACKD1 <= BGACK;
     BGACKD2 <= BGACKD1;
     
     // 7Mhz Clock divided by 2
     CLK7MB2 <= ~CLK7MB2;
-      
+    
    if (Q == 'd9) begin
 
       VMA_SYNC <= 1'b1;
@@ -171,18 +164,18 @@ wire UDS_INT = DS20 | DS20DLY | A0;
 wire LDS_INT = DS20 | DS20DLY | ({A0, SIZ[1:0]} == 3'b001);  
 wire VMA_INT = VMA_SYNC;  
  
-assign RW00 = RW20DLY;      
+assign RW00 = RW20DLY | RW20;      
 assign AS = AS_INT;   
 assign UDS =  UDS_INT;
 assign LDS =   LDS_INT;
 assign VMA =  VMA_INT;
 
 assign DTRIG_SYNC = ~Q[3] | VMA_SYNC;
-assign DTRIG = DTACK & DTRIG_SYNC;
-assign DSACK1 = (AS20DLY | AS20 | SYSDSACK1);
+assign DTRIG = (DTACK | DTQUAL) & DTRIG_SYNC;
+assign DSACK1 = (AS20DLY |  AS20 | SYSDSACK1);
 
-assign BG = BG20 | AS20DLY | AS20;
-assign AVEC = IACK & ~VPA;
+assign BG = BG20;
+assign AVEC = ~IACK | VPA;
 assign BERR = ~CPCS;
       
 endmodule
